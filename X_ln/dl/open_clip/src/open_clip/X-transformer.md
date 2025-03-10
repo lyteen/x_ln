@@ -61,7 +61,6 @@ class QuickGELU(nn.Module):
 
 *   `QuickGELU` 是 GELU 激活函数的一个近似。 虽然它在某些情况下可能更快，但通常比标准的 `nn.GELU` 或 `nn.SiLU` 慢，并且使用更多的 GPU 内存。
 *    `QuickGELU` 是一种对 GELU 激活函数的近似计算。 尽管在一些特定的情况下，它可能表现出更快的计算速度，但通常情况下，它的效率低于标准的 `nn.GELU` 或 `nn.SiLU` 函数，并且会占用更多的 GPU 内存资源。
-*   **中文 (Chinese):** `QuickGELU` 是 GELU 激活函数的一种近似。虽然在某些情况下可能更快，但通常比标准的 `nn.GELU` 或 `nn.SiLU` 慢，并且使用更多的 GPU 内存。
 *   **目的 (Purpose):** 引入非线性，使模型能够学习更复杂的模式。
 
 **演示 (Demo):**
@@ -175,7 +174,8 @@ patch_dropout = PatchDropout(prob=0.2)
 output = patch_dropout(x)
 print(f"PatchDropout 输出形状: {output.shape}")
 ```
-
+Used: model.py
+---
 **5. Attention (注意力机制)**
 
 ```python
@@ -289,8 +289,12 @@ class Attention(nn.Module):
     *   `scale_heads`: 为每个注意力头学习一个独立的缩放参数。 这样做可以让模型更加灵活地调整每个注意力头的贡献度，从而提高整体性能。
     *   `qkv_bias`: 是否为 Query, Key 和 Value 线性层添加偏置。 偏置项可以帮助模型更好地学习数据中的平移不变性。
     *   `use_fsdpa`: 如果可用，使用 `scaled_dot_product_attention` 来加速计算。 `scaled_dot_product_attention` 是 PyTorch 2.0 中引入的一个高性能注意力机制实现，可以显著提高计算速度。
-*   **中文 (Chinese):** 这是一个标准的多头注意力机制实现，具有一些额外的选项，如缩放的余弦相似度、头部缩放和 QKV 偏置。  如果可用，还会使用 `scaled_dot_product_attention` 来加速计算。
 *   **目的 (Purpose):** 允许模型关注输入序列的不同部分，从而学习上下文相关的表示。
+
+**----采用----**
+*  使用可学习的 logit_scale 放缩 Attention logits，提高训练的稳定性，但是理论上训练成本增高
+*  灵活性高，可选择 scaled_dot_product_attention，自定义 attention，原始 attention
+
 
 **演示 (Demo):**
 
