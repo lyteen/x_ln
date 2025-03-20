@@ -1,7 +1,5 @@
 Lan: `py` From`dl/DeepSeek-V3\inference\model.py`
 
-Okay, let's restart and focus on providing concise explanations and Chinese translations for each code snippet.
-
 **1. ModelArgs (模型参数):**
 
 ```python

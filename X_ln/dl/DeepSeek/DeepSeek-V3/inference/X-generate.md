@@ -1,7 +1,5 @@
 Lan: `py` From`dl/DeepSeek-V3\inference\generate.py`
 
-Okay, I will provide a more refined and potentially more efficient version of the code, along with explanations and Chinese descriptions. I will focus on improving the `generate` function and making it more robust.
-
 **1.  改进的 `sample` 函数 (Improved `sample` function):**
 
 ```python

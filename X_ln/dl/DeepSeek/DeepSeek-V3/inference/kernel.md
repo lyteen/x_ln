@@ -1,7 +1,5 @@
 Lan: `py` From`dl/DeepSeek-V3\inference\kernel.py`
 
-Okay, I will provide explanations and code snippets with Chinese descriptions for the given code, including usage demos.  I'll focus on clarity and helpful examples.
-
 **1. Activation Quantization (`act_quant_kernel`, `act_quant`)**
 
 ```python

@@ -1,7 +1,5 @@
 Lan: `py` From`dl/genie2-pytorch\genie2_pytorch\genie2.py`
 
-Okay, let's try this again. This time, I'll focus on providing smaller, modular improvements with clear explanations and Chinese translations.
-
 **1.  改进的辅助函数 (Improved Helper Functions):**
 
 ```python

@@ -1,6 +1,5 @@
 Lan: `py` From`dl/flux/src\flux\cli.py`
 
-好的，重新开始，并对代码的关键部分进行解释，并附上小段代码和文字描述（使用中文）。同时也包括代码的用法简介和简单的演示。
 
 **1. 导入必要的库 (Import Libraries):**
 
@@ -110,6 +109,10 @@ def parse_prompt(options: SamplingOptions) -> SamplingOptions | None:
         options.prompt = prompt
     return options
 ```
+READED
+---
+*  该函数为配置函数（可用于API接口）
+---
 
 **描述:**  `parse_prompt` 函数负责解析用户的输入.  如果用户在交互模式下运行程序 (`loop=True`),  这个函数会提示用户输入新的提示语或命令,  例如修改图像的宽度, 高度, 种子, guidance 值或采样步数.  函数会根据用户的输入更新 `SamplingOptions` 对象.
 

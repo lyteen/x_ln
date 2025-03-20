@@ -1,7 +1,5 @@
 Lan: `py` From`dl/DeepSeek-V3\inference\model.py`
 
-好的，我将提供一个更智能的版本，并附上代码片段和中文描述，以及一个简单的演示。
-
 **1. 改进的 ModelArgs (模型参数类):**
 
 ```python

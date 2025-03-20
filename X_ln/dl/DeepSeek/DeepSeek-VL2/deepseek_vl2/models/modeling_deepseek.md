@@ -694,15 +694,83 @@ class DeepseekV2ForCausalLM(DeepseekV2PreTrainedModel):
             self,
             input_ids,
             past_key_values=None,
-            attention_mask=None,
             inputs_embeds=None,
+
+            images: Optional[torch.FloatTensor] = None,
+            images_seq_mask: Optional[torch.LongTensor] = None,
+            images_spatial_crop: Optional[torch.LongTensor] = None,
+
+            attention_mask=None,
+            cache_position=None,
+
+            pixel_values=None,
+            image_sizes=None,
+            num_logits_to_keep=None,
             **kwargs,
     ):
-        past_length = 0
-        if past_key_values is not None:
-            if isinstance(past_key_values, Cache):
-                cache_length = past_key_values.get_seq_length()
-                past_length = past_key_values.seen_tokens
-                max_cache_length = past_key_values.get_max_length()
-            else:
-                cache_length = past_length = past_key_values[0][0].shape[
+        # Overwritten -- in specific circumstances we don't want to forward image inputs to the model
+        model_inputs = self.language.prepare_inputs_for_generation(
+            input_ids,
+            past_key_values=past_key_values,
+            inputs_embeds=inputs_embeds,
+            attention_mask=attention_mask,
+            cache_position=cache_position,
+            num_logits_to_keep=num_logits_to_keep,
+            **kwargs,
+        )
+
+        # If we're in cached decoding stage, pixel values should be None because input ids do not contain special image token anymore
+        # Otherwise we need pixel values to be passed to model
+        cache_position = model_inputs["cache_position"]
+        if cache_position[0] == 0:
+            model_inputs["images"] = images
+            model_inputs["images_seq_mask"] = images_seq_mask
+            model_inputs["images_spatial_crop"] = images_spatial_crop
+
+        return model_inputs
+
+    @staticmethod
+    def _reorder_cache(past_key_values, beam_idx):
+        reordered_past = ()
+        for layer_past in past_key_values:
+            reordered_past += (
+                tuple(
+                    past_state.index_select(0, beam_idx.to(past_state.device))
+                    for past_state in layer_past
+                ),
+            )
+        return reordered_past
+
+
+AutoConfig.register("vision", VisionEncoderConfig)
+AutoConfig.register("mlp_projector", MlpProjectorConfig)
+AutoConfig.register("deepseek_vl_v2", DeepseekVLV2Config)
+AutoModelForCausalLM.register(DeepseekVLV2Config, DeepseekVLV2ForCausalLM)
+```
+**描述:**
+`incremental_prefill` 函数:
+这个函数用于增量预填充 (`incremental prefilling`) 过程，即将输入序列分块处理，并计算每一块的 `past_key_values`。
+
+
+将输入序列 `inputs_embeds` 分成大小为 `chunk_size` 的块，并逐个块地传递给模型。
+在处理每个块时，它会计算 position_ids 和 past_key_values，并将它们传递给模型。
+它使用 `torch.no_grad()`上下文管理器来禁用梯度计算，因为在预填充过程中不需要梯度。
+它将每个块的 `past_key_values` 存储在 prefilling_key_values 列表中，并在最后返回。
+
+此函数用于高效地处理长输入序列，避免一次性将整个序列加载到 GPU 内存中。
+
+
+`_clear_cuda_cache` 函数:
+此函数用于清除 CUDA 内存缓存。
+它调用 `gc.collect()` 来强制执行垃圾回收，并使用 `torch.cuda.empty_cache()` 和 `torch.cuda.synchronize()` 来清除 CUDA 缓存。
+在处理大型模型和长序列时，清除 CUDA 缓存非常重要，以避免内存不足错误。
+
+
+`_move_past_key_values_to_cpu` 和 `_move_past_key_values_to_gpu` 函数:
+这些函数用于在 CPU 和 GPU 之间移动 past_key_values。
+当需要将 past_key_values 存储在 CPU 内存中或将其传递给另一个 GPU 设备时，可以使用这些函数。
+
+
+`_reorder_cache` 函数:
+此函数用于在 beam search 过程中重新排序 past_key_values。
+它根据 beam_idx 重新排列 past_key_values，以确保每个 beam 都有正确的上下文。

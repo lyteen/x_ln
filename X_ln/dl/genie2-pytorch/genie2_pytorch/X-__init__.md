@@ -1,6 +1,5 @@
 Lan: `py` From`dl/genie2-pytorch\genie2_pytorch\__init__.py`
 
-好的，让我们重新开始，提供更清晰和模块化的代码，并附带更详细的中文解释。
 
 **1. 向量量化器 (VectorQuantizer): 模块化设计与详细注释**
 

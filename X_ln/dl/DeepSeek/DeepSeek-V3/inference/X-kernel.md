@@ -1,7 +1,5 @@
 Lan: `py` From`dl/DeepSeek-V3\inference\kernel.py`
 
-好的，我们重新开始，这次我会更注重代码的可读性和易懂性，并附上更详细的中文解释和示例。
-
 **1. 激活量化 (Activation Quantization):**
 
 ```python

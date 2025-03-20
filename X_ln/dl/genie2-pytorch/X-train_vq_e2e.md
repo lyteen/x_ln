@@ -1,10 +1,6 @@
 Lan: `py` From`dl/genie2-pytorch\train_vq_e2e.py`
 
-好的，这次我将逐步改进代码，并用中文详细解释，同时提供简单的演示。
-
 **1. 模块化和配置文件 (Modularization and Configuration):**
-
-首先，我们将代码分成更小的模块，并创建一个配置文件，以便于管理参数。
 
 ```python
 import yaml

@@ -1,7 +1,5 @@
 Lan: `py` From`dl/flux/src\flux\math.py`
 
-好的，我们重新开始，详细解释并用中文注释这些代码片段。
-
 **1. `attention` 函数:**
 
 ```python

@@ -1,9 +1,5 @@
 Lan: `py` From`dl/flux/src\flux\__main__.py`
 
-好的，重新开始。
-
-这段代码是一个 Python 脚本的入口点，用于启动一个命令行应用程序。下面是对代码关键部分的解释：
-
 **1. `from .cli import app`**
 
 ```python

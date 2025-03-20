@@ -1,7 +1,5 @@
 Lan: `py` From`dl/genie2-pytorch\train_vq_e2e.py`
 
-好的，我们重新开始，这次将针对你提供的完整代码进行解释和拆解，并添加中文注释和示例。
-
 **1. 导入必要的库 (Import Libraries):**
 
 ```python

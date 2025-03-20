@@ -1,7 +1,5 @@
 Lan: `py` From`dl/genie2-pytorch\genie2_pytorch\__init__.py`
 
-好的，重新开始解释 `from genie2_pytorch.genie2 import Genie2` 这行代码，并提供相关代码片段和描述：
-
 **总览:**
 
 这行代码的作用是从 `genie2_pytorch` 库中的 `genie2` 模块导入 `Genie2` 类。 `Genie2` 类很可能是实现 Genie2 模型的类。 Genie2 是一种可能用于生成图像、音频或其他类型数据的模型。

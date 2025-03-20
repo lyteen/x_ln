@@ -1,7 +1,5 @@
 Lan: `py` From`dl/flux/src\flux\sampling.py`
 
-Okay, let's break down this code snippet piece by piece, explaining the key parts with Chinese comments and usage examples.
-
 **1. `get_noise` Function:**
 
 ```python

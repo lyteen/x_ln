@@ -1,6 +1,5 @@
 Lan: `py` From`dl/flux/src\flux\model.py`
 
-好的，重新开始。
 
 **1. `FluxParams` 数据类 (Data Class):**
 
